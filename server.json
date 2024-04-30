@@ -1,0 +1,55 @@
+{
+    "servers" : [
+        {
+            "enabled" : true,
+            "port" : 9093,
+            "name" : "console",
+
+            "locations" : [
+                {
+                    "uri" : "\\.tpl$",
+                    "paths" : ["$root/app/$name/templates$uri"],
+                    "deny" : true
+                },
+                {
+                    "uri" : ".*",
+                    "paths" : ["$root/app/$name/templates$uri", "/home/syed/Desktop/plex-media$uri"],
+                    "deny" : false
+                }
+            ],
+
+            "url_rewrites" : [
+                {
+                    "from" : "/(?<lang>en|fr|sp)/(?<uri>.*)",
+                    "to" : "/$uri"
+                }
+            ],
+
+            "app_configs" : [
+                "$root/app/$name/config.json"
+            ]
+        },
+        {
+            "port" : 9090,
+            "name" : "front",
+
+            "locations" : [
+                {
+                    "uri" : ".*",
+                    "paths" : ["$root/app/$name/templates$uri"]
+                }
+            ],
+
+            "url_rewrites" : [
+                {
+                    "from" : "/(?<lang>en|de)/(?<uri>.*)",
+                    "to" : "/$uri"
+                }
+            ],
+
+            "app_configs" : [
+                "$root/app/$name/config.json"
+            ]
+        }
+    ]
+}
